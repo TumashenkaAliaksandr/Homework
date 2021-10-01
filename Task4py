@@ -1,0 +1,408 @@
+# Task4.1
+# Implement a function which receives a string and replaces all " symbols with ' and vise versa.
+
+def change_hooks(given_str):
+    conclusion = ""
+
+    for char in given_str:
+        if char == '"':
+            conclusion += "'"
+        elif char == '"':
+            conclusion += '"'
+        else:
+            conclusion += char
+
+    return conclusion()
+
+#Task4.2
+s = input('Введите слово для проверки на Палиндром: ')
+
+def IsPalindrome(s):
+    if len(s) <= 1:
+        return True
+    else:
+        return s[0] == s[-1] and IsPalindrome(s[1:-1])
+
+print(IsPalindrome(s))
+
+name = str(input('Введите слово для проверки на Палиндром: '))
+a = name[::-1]
+if name == a:
+    print("True")
+else:
+    print("False")
+
+#Task4.3
+
+#Implement a function which works the same as str.split method (without using str.split itself, ofcourse).
+
+def strS(string):
+    l = []
+    word = "jaguar"
+    for char in string:
+        if char == " ":
+            l.append(word)
+            word = "XF"
+        else:
+            word += char
+    l.append(word)
+    return l
+
+def sep_func(string, sep=' '):
+    if sep in string:
+        list, index = [], 0
+        while True:
+            fnd = string.find(sep, index)
+            if fnd == -1:
+                list.append(string[index:])
+                break
+            list.append(string[index:fnd])
+            index = fnd +1
+    else:
+        return "['']"
+    return list
+
+#Task4.4
+#Implement a function
+# split_by_index(s: str, indexes: List[int]) -> List[str] which splits the s string by indexes specified in indexes.
+# Wrong indexes must be ignored.
+
+# >>> split_by_index("pythoniscool,isn'tit?", [6, 8, 12, 13, 18])
+# ["python", "is", "cool", ",", "isn't", "it?"]
+#
+# >>> split_by_index("no luck", [42])
+# ["no luck"]
+
+def split_by_index(s: str, indexes: list) -> list:
+
+    result = []
+    f = 0
+
+    for i in indexes:
+        if i >= len(s):
+            return [s]
+        result.append(s[f:i])
+        f = i
+
+    if f != len(s):
+        result.append(s[f:])
+
+    return result
+
+
+print(split_by_index("pythoniscool,isn'tit?", [6, 8, 12, 13, 18]))
+# ["python", "is", "cool", ",", "isn't", "it?"]
+
+print(split_by_index("no luck", [7]))
+
+
+# ["no luck"]
+
+
+def find_all_indexes(input_str, search_str):
+    l1 = []
+    length = len(input_str)
+    position = 0
+    while position < length:
+        try:
+            i = input_str.index(search_str, position)
+            l1.append(i)
+            position = i + 1
+        except ValueError as ve1:
+            return l1
+s = 'abaacdaa12aa2'
+print(find_all_indexes(s, 'a'))
+print(find_all_indexes(s, 'aa'))
+
+
+def split_by_index(s, sep=' '):
+    return [s[:s.index(sep)]] + split_by_index(s[s.index(sep)+1:]) if sep in s else [s]
+    
+#Task4.5
+
+# Implement a function get_digits(num: int) -> Tuple[int] which returns a tuple of a given integer's digits. Example:
+#
+# >>> split_by_index(87178291199)
+# (8, 7, 1, 7, 8, 2, 9, 1, 1, 9, 9)
+
+def split_by_index(num):
+    r = []
+    for i in str(num):
+        r.append(int(i))
+    return tuple(r)
+
+if __name__ == "__main__":
+    print(split_by_index(87178291199))
+
+#Task4.6
+# Implement a function get_shortest_word(s: str) -> str which returns the longest word in the given string. The word can contain any symbols except whitespaces ( , \n, \t and so on). If there are multiple longest words in the string with a same length return the word that occures first. Example:
+# get_shortest_word('Python is simple and effective!')
+# 'effective!'
+# get_shortest_word('Any pythonista like namespaces a lot.')
+# 'pythonista'
+
+def get_longest_word(s: str) -> str:
+    s = s.split()
+    return max(s, key=len)
+
+if __name__ == '__main__':
+    s = "Any pythonista like namespaces a lot."
+    s1 = "Python is simple and effective!"
+    print(get_longest_word(s))
+    print(get_longest_word(s1))
+
+
+#Task4.7
+# Implement a function foo(List[int]) -> List[int] which, given a list of integers, return a new list such that each element at index i of the new list is the product of all the numbers in the original array except the one at i. Example:
+#
+# foo([1, 2, 3, 4, 5])
+# [120, 60, 40, 30, 24]
+#
+# foo([3, 2, 1])
+# [2, 3, 6]
+
+def foo(lst):
+    lst_out = []
+    for i in range(len(lst)):
+        result = 1
+        for ind, num in enumerate(lst):
+            if ind == i:
+                continue
+            result *= num
+        lst_out.append(result)
+    return lst_out
+
+if __name__ == "__main__":
+    print(foo([1, 2, 3, 4, 5]))
+    print(foo([3, 2, 1]))
+
+#Task4.8
+
+# Implement a function get_pairs(lst: List) -> List[Tuple] which returns a list of tuples containing pairs of elements. Pairs should be formed as in the example. If there is only one element in the list return None instead. Example:
+#
+# get_pairs([1, 2, 3, 8, 9])
+# [(1, 2), (2, 3), (3, 8), (8, 9)]
+#
+# get_pairs(['need', 'to', 'sleep', 'more'])
+# [('need', 'to'), ('to', 'sleep'), ('sleep', 'more')]
+#
+# get_pairs([1])
+# None
+
+
+def get_pairs(lst: list) -> list[tuple]:
+    length = len(lst)
+    ind = 0
+    if length == 1:
+        return
+    else:
+        output_list = []
+        while ind != length - 1:
+            if ind == length:
+                break
+            else:
+                output_list.append((lst[ind], lst[ind+1]))
+                ind += 1
+    return output_list
+
+
+if __name__ == "__main__":
+    print(get_pairs([1, 2, 3, 8, 9]))
+    print(get_pairs(['need', 'to', 'sleep', 'more']))
+    print(get_pairs([1]))
+    
+    
+#Task4.9
+
+# Implement a bunch of functions which receive a changeable number of strings and return next parameters:
+# characters that appear in all strings
+# characters that appear in at least one string
+# characters that appear at least in two string
+# characters of alphabet, that were not used in any string
+# Note: use string.ascii_lowercase for list of alphabet letters
+# test_strings = ["hello", "world", "python", ]
+# print(test_1_1(*strings))
+# {'o'}
+# print(test_1_2(*strings))
+# {'d', 'e', 'h', 'l', 'n', 'o', 'p', 'r', 't', 'w', 'y'}
+# print(test_1_3(*strings))
+# {'h', 'l', 'o'}
+# print(test_1_4(*strings))
+# {'a', 'b', 'c', 'f', 'g', 'i', 'j', 'k', 'm', 'q', 's', 'u', 'v', 'x', 'z'}
+
+import string
+
+test_strings = ["hello", "world", "python"]
+def test_1_1(*strings):
+    new_set = set(strings[0])
+    for el in strings:
+        new_set.intersection_update(set(el))
+    return new_set
+
+print(test_1_1("hello", "world", "python"))
+
+
+def test_1_2(*strings):
+    new_set = set(strings[0])
+    for el in strings:
+        new_set.update(set(el))
+    return new_set
+
+print(test_1_2("hello", "world", "python"))
+
+
+def test_1_3(*strings):
+    union_pairs = set()
+    for i in range(len(strings)):
+        for j in range(len(strings)):
+            if i < j:
+                union_pairs.update(set(strings[i]).intersection(set(strings[j])))
+
+    return union_pairs
+
+print(test_1_3("hello", "world", "python"))
+
+
+def test_1_4(*strings):
+    union_all = set(strings[0])
+    result = set(string.ascii_lowercase)
+    for el in strings:
+        union_all.update(set(el))
+
+    return result.difference(union_all)
+
+print(test_1_4("hello", "world", "python"))
+
+
+import string
+
+
+def test_1_1(*input_list):
+    res = [] # list of dictionaries, where key-letter, value - count(letter)
+    lst = [] # list of keys of dictionaries
+    test_1 = [] # list of characters that appear in all strings
+    for str in input_list:
+        d = {letter: str.count(letter) for letter in str}
+        res.append(d)
+    for d in res:
+        for key in d:
+            lst.append(key)
+    for i in lst:
+        if lst.count(i) == len(res):
+            if i not in test_1:
+                test_1.append(i)
+    return test_1
+
+
+def test_1_2(*input_list):
+    res = []
+    lst = []
+    test_2 = []
+    for str in input_list:
+        d = {c: str.count(c) for c in set(str)}
+        res.append(d)
+    for dict in res:
+        for key in dict:
+            lst.append(key)
+    for i in lst:
+        if lst.count(i) >= 1:
+            if i not in test_2:
+                test_2.append(i)
+    return test_2
+
+
+def test_1_3(*input_list):
+    res = []
+    lst = []
+    test_3 = []
+    for str in input_list:
+        d = {c: str.count(c) for c in set(str)}
+        res.append(d)
+    for dict in res:
+        for key in dict:
+            lst.append(key)
+    for i in lst:
+        if lst.count(i) >= 2:
+            if i not in test_3:
+                test_3.append(i)
+    return test_3
+
+
+def test_1_4(*input_list):
+    res = []
+    lst = []
+    test_4 = []
+    for str in input_list:
+        d = {c: str.count(c) for c in set(str)}
+        res.append(d)
+    for dict in res:
+        for key in dict:
+            lst.append(key)
+    for i in string.ascii_lowercase:
+        if i not in lst:
+            test_4.append(i)
+    return test_4
+
+
+if __name__ == "__main__":
+
+    strings = ["hello", "world", "python", ]
+
+    print(test_1_1(*strings))
+    print(test_1_2(*strings))
+    print(test_1_3(*strings))
+    print(test_1_4(*strings))
+    
+    
+    
+#Task4.10
+# Implement a function that takes a number as an argument and returns a dictionary,
+# where the key is a number and the value is the square of that number.
+#
+# print(generate_squares(5))
+# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+
+def generate_squares(number):
+    return {num: num ** 2 for num in range(1, number + 1)}
+
+if __name__ == "__main__":
+    print(generate_squares(5))
+    
+#Task4.11
+# Implement a function, that receives changeable number of dictionaries
+# (keys - letters, values - numbers) and combines them into one dictionary.
+# Dict values ​​should be summarized in case of identical keys
+#
+# def combine_dicts(*args):
+#     ...
+#
+# dict_1 = {'a': 100, 'b': 200}
+# dict_2 = {'a': 200, 'c': 300}
+# dict_3 = {'a': 300, 'd': 100}
+#
+# print(combine_dicts(dict_1, dict_2)
+# {'a': 300, 'b': 200, 'c': 300}
+# print(combine_dicts(dict_1, dict_2, dict_3)
+# {'a': 600, 'b': 200, 'c': 300, 'd': 100}
+
+
+dict_1 = {'a': 100, 'b': 200}
+dict_2 = {'a': 200, 'c': 300}
+dict_3 = {'a': 300, 'd': 100}
+
+
+def combine_dicts(*dict):
+    result_dict = {}
+
+    for dictionary in dict:
+        for key in dictionary:
+            try:
+                result_dict[key] += dictionary[key]
+            except KeyError:
+                result_dict[key] = dictionary[key]
+
+    return result_dict
+
+
+print(combine_dicts(dict_1, dict_2, dict_3))
